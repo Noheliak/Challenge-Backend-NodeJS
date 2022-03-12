@@ -1,0 +1,30 @@
+{
+  "name": "challenge-backend-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noheliak/Challenge-Backend-NodeJS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noheliak/Challenge-Backend-NodeJS/issues"
+  },
+  "homepage": "https://github.com/Noheliak/Challenge-Backend-NodeJS#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "method": "^2.0.0",
+    "method-override": "^3.0.0",
+    "mysql2": "^2.3.3",
+    "override": "^0.0.1",
+    "require": "^2.4.20",
+    "sequelize": "^6.17.0",
+    "stack": "^0.1.0"
+  }
+}
