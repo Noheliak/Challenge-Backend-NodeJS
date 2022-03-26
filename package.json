@@ -25,6 +25,7 @@
     "override": "^0.0.1",
     "require": "^2.4.20",
     "sequelize": "^6.17.0",
+    "sequelize-cli": "^6.4.1",
     "stack": "^0.1.0"
   }
 }

@@ -6,18 +6,15 @@ const indexRouter = require ('./routes/indexRoute');
 
 const moviesRoutes = require('./routes/moviesRoute');
 const genresRoutes = require('./routes/genresRoute');
+const charactersRoutes= require('./routes/charactersRoute');
 const app = express();
 
-// view engine setup
-app.set('views', path.resolve(__dirname, './views'));
-app.set('view engine', 'ejs');
 
-
-app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/', indexRouter);
-app.use(moviesRoutes);
-app.use(genresRoutes);
+app.use("/movies",moviesRoutes);
+app.use("/genres",genresRoutes);
+app.use("/characters", charactersRoutes)
 
 app.listen(2704, () =>{ console.log ("Servidor Funcionando") })

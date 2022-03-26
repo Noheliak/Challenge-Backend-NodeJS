@@ -1,0 +1,44 @@
+module.exports = (sequelize, dataTypes) => {
+        let alias = 'Character';
+        let cols = {
+        idcharacter: {
+            type: dataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+           Image: {
+            type: dataTypes.STRING,
+          
+        },
+        name: {
+            type: dataTypes.STRING,
+          
+        },
+        age: {
+            type: dataTypes.INTEGER,
+            
+        },
+        weight:{ type: dataTypes.INTEGER,
+        },
+
+        history: {type: dataTypes.STRING },
+
+        movies_associate: { type: dataTypes.STRING}
+    };
+    let config = {
+        tableName: 'character',  
+        timestamps: false
+    }
+    const Character = sequelize.define(alias, cols, config); 
+
+    Character.associate = function(models) {
+        Character.belongToMany(models.Movie, {
+            as: "movie",
+            through: "character_movie",
+            foreignKey: "character_id",
+            otherKey: "movie_id",
+            timestamps: false
+        })
+    }
+    return Character 
+}

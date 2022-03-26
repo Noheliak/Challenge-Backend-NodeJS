@@ -1,63 +1,82 @@
 const db = require('../database/models');
 const sequelize = db.sequelize;
 
-//Otra forma de llamar a los modelos
-const Movies = db.Movie;
+
+const Movies = db.Movies;
 
 const moviesController = {
     'list': (req, res) => {
-        db.Movie.findAll()
+        db.Movies.findAll()
             .then(movies => {
-                res.render('moviesList.ejs', {movies})
+                res.render('moviesList.ejs', {movies: movies})
             })
     },
     'detail': (req, res) => {
-        db.Movie.findByPk(req.params.id)
-            .then(movie => {
-                res.render('moviesDetail.ejs', {movie});
-            });
-    },
-    'new': (req, res) => {
-        db.Movie.findAll({
-            order : [
-                ['release_date', 'DESC']
-            ],
-            limit: 5
+        db.Movies.findByPk(req.params.id, {
+            include: [{ association: "genre"}, { association: "character"}]
         })
             .then(movies => {
-                res.render('newestMovies', {movies});
+                res.render('moviesDetail.ejs', {movies: movies});
             });
     },
-    'recomended': (req, res) => {
-        db.Movie.findAll({
-            where: {
-                rating: {[db.Sequelize.Op.gte] : 8}
-            },
-            order: [
-                ['rating', 'DESC']
-            ]
-        })
-            .then(movies => {
-                res.render('recommendedMovies.ejs', {movies});
-            });
-    }, //Aqui debemos modificar y completar lo necesario para trabajar con el CRUD
+   
+   
     add: function (req, res) {
-        // TODO   
+        db.Genres.findAll()
+        .then(function(genres){
+            return res.render("moviesCreates", {genres:genres})
+        })
+          
     },
     create: function (req, res) {
-        // TODO
+        db.Movies.create({
+            image: req.body.image,
+            title: req.body.title,
+            creationDate: req.body.creationDate,
+            ranking: req.body.ranking,
+            character_associate: req.body.character_associate
+        });
+        res.redirect("/movies"); 
+        
     },
     edit: function(req, res) {
-        // TODO
+        
+        let getMovie = db.Movies.findByPk(req.params.id);
+
+        let getGenre= db.Genres.findAll();
+
+        Promise.all([getMovie, getGenre])
+        .then(function([movie, genre]){
+            res.render("editMovie", {movie:movie, genre: genre})
+        })
+        
     },
     update: function (req,res) {
-        // TODO
+        db.Movies.update({
+            image: req.body.image,
+            title: req.body.title,
+            creationDate: req.body.creationDate,
+            ranking: req.body.ranking,
+            character_associate: req.body.character_associate
+        }, {
+            where: {
+                id: req.params.id
+            }
+        });
+
+        res.redirect("/movies/" + req.params.id)        
+     
     },
-    delete: function (req, res) {
-        // TODO
-    },
+ 
     destroy: function (req, res) {
-        // TODO
+        db.Movies.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        res.redirect("/movies");
+       
     }
 
 }
