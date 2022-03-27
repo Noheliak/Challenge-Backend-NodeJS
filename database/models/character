@@ -26,7 +26,7 @@ module.exports = (sequelize, dataTypes) => {
         movies_associate: { type: dataTypes.STRING}
     };
     let config = {
-        tableName: 'character',  
+        tableName: 'characters',  
         timestamps: false
     }
     const Character = sequelize.define(alias, cols, config); 

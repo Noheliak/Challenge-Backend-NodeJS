@@ -1,22 +1,24 @@
+const path = require('path');
 const db = require('../database/models');
 const sequelize = db.sequelize;
+const op = db.Sequelize.Op;
 
 
-const Movies = db.Movies;
+const Movie = db.Movie;
 
 const moviesController = {
     'list': (req, res) => {
-        db.Movies.findAll()
-            .then(movies => {
-                res.render('moviesList.ejs', {movies: movies})
+        db.Movie.findAll()
+            .then(movie => {
+                res.render('moviesList.ejs', {movie: movie})
             })
     },
     'detail': (req, res) => {
-        db.Movies.findByPk(req.params.id, {
+        db.Movie.findByPk(req.params.id, {
             include: [{ association: "genre"}, { association: "character"}]
         })
-            .then(movies => {
-                res.render('moviesDetail.ejs', {movies: movies});
+            .then(movie => {
+                res.render('moviesDetail.ejs', {movie: movie});
             });
     },
    
@@ -29,7 +31,7 @@ const moviesController = {
           
     },
     create: function (req, res) {
-        db.Movies.create({
+        db.Movie.create({
             image: req.body.image,
             title: req.body.title,
             creationDate: req.body.creationDate,
@@ -41,7 +43,7 @@ const moviesController = {
     },
     edit: function(req, res) {
         
-        let getMovie = db.Movies.findByPk(req.params.id);
+        let getMovie = db.Movie.findByPk(req.params.id);
 
         let getGenre= db.Genres.findAll();
 
@@ -52,7 +54,7 @@ const moviesController = {
         
     },
     update: function (req,res) {
-        db.Movies.update({
+        db.Movie.update({
             image: req.body.image,
             title: req.body.title,
             creationDate: req.body.creationDate,
@@ -69,7 +71,7 @@ const moviesController = {
     },
  
     destroy: function (req, res) {
-        db.Movies.destroy({
+        db.Movie.destroy({
             where: {
                 id: req.params.id
             }
