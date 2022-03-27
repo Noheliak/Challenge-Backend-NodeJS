@@ -10,12 +10,12 @@ const genresRoutes = require('./routes/genresRoute');
 const charactersRoutes= require('./routes/charactersRoute');
 
 
-//Requerimos rutas de Api
+//RUTAS APIS
 const moviesApiRoutes = require('./routes/API/moviesApiRoutes');
 const characterApiRoutes = require('./routes/API/characterApiRoutes');
 const genreApiRoutes = require('./routes/API/genreApiRoutes');
 
-//Endpoints de Apis
+//ENDPOINTS
 app.use('/API/movies', moviesApiRoutes);
 app.use('/API/character', characterApiRoutes);
 app.use('/API/genre', genreApiRoutes);
@@ -29,6 +29,7 @@ app.use("/movies",moviesRoutes);
 app.use("/genres",genresRoutes);
 app.use("/characters", charactersRoutes)
 
+//PARA LOGIN DE USUARIO
 const encripta = require('bcryptjs');
 const session = require('express-session');
 app.use(session( {  secret: "Challenge", 
